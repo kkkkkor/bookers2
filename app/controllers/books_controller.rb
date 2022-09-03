@@ -3,20 +3,22 @@ class BooksController < ApplicationController
   end
 
   def new
-   @book_image = BookImage.new
+   @book = Book.new
   end
 
   def create
-    @book_image = BookImage.new(book_image_params)
-    @book_image.user_id = current_user.id
-    @book_image.save
-    redirect_to book_images_path
+    @book = Book.new(book_image_params)
+    @book.user_id = current_user.id
+    @book.save
+    redirect_to user_path
   end
 
   def index
+    @books = Book.all
   end
 
   def show
+    @book = Book.show
   end
 
   def destroy
@@ -25,7 +27,7 @@ class BooksController < ApplicationController
 
   private
 
-  def book_image_params
+  def book_params
     params.require(:book_image).permit(:shop_name, :image, :caption)
   end
 end
